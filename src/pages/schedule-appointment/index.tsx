@@ -23,6 +23,10 @@ const ScheduleAppointmentPage = () => {
     }));
   }
 
+  function handleProceed() {
+    navigate('/confirm-appointment')
+  }
+
   return (
     <Flex id='schedule-appointment-page' className="page" direction='column' justify={'center'} align='center'>
       <Flex justify='center' align='center' gap='5'>
@@ -56,8 +60,8 @@ const ScheduleAppointmentPage = () => {
         </Flex>
       </Flex>
       <Flex align='center' justify='end' width="80%" mt='8' gap='3'>
-        <Button size='3'>Back</Button>
-        <Button size='3' disabled={!(appointmentInfo.date && appointmentInfo.time)}>Proceed</Button>
+        <Button size='3' onClick={() => navigate('/doctors')}>Back</Button>
+        <Button size='3' disabled={!(appointmentInfo.date && appointmentInfo.time)} onClick={handleProceed}>Proceed</Button>
       </Flex>
     </Flex>
   )
