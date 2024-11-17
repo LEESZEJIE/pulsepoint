@@ -10,7 +10,7 @@ const links = [
     },
     {
         label: 'Our Doctors',
-        path: '/our-doctors',
+        path: '/doctors',
     },
     {
         label: 'Appointment',
