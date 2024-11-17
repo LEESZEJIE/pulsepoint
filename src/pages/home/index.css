@@ -1,0 +1,23 @@
+#home-page {
+    position: relative;
+}
+
+#home-page .doctor-mascot {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#home-page .vision-mission {
+    position: absolute;
+    width: 45%;
+    text-align: center;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+#home-page .vision {
+    margin-bottom: 30px;
+}

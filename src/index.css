@@ -1,0 +1,23 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --blue-1: #78AAC3; /* background, subtle areas */
+    --blue-2: #C4DEEE; /* lighter background, secondary areas */
+    --blue-3: #97C8D6; /* buttons, accents */
+    --orange-1: #EEAB73; /* alerts, emphasis */
+    --yellow: #F3CD86; /* success text, icons */
+    --coral: #F5A281; /* error text, warnings */
+}
+
+.page {
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+}
