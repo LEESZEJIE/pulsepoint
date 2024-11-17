@@ -27,6 +27,11 @@ const routes = [
         path: '/schedule-appointment',
         element: withLazyComponent(React.lazy(() => import('../pages/schedule-appointment'))),
     },
+    {
+        name: 'confirm-appointment',
+        path: '/confirm-appointment',
+        element: withLazyComponent(React.lazy(() => import('../pages/confirm-appointment'))),
+    },
 ]
 
 export default routes;

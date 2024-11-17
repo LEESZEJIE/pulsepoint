@@ -34,3 +34,8 @@ export const appointmentInfoState = atom<IAppointment>({
     type: 'teleconsultation',
   }
 })
+
+export const appointmentsListState = atom<(IDoctor & IAppointment)[]>({
+  key: 'appointmentsListState',
+  default: []
+})
