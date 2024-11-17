@@ -1,31 +1,64 @@
-import { Box, Flex } from "@radix-ui/themes"
+import { Box, Flex, SegmentedControl, Text, Button } from "@radix-ui/themes"
 import { useRecoilState } from "recoil"
-import { selectedDoctorState } from "../../state"
+import { appointmentInfoState, selectedDoctorState } from "../../state"
 import DoctorCard from "../../components/doctor-card";
 import { useNavigate } from "react-router-dom";
-import { Calendar, CalendarProps } from "antd";
+import { Calendar, TimePicker } from "antd";
 import { Dayjs } from "dayjs";
 
 const ScheduleAppointmentPage = () => {
   const navigate = useNavigate();
   const [selectedDoctor] = useRecoilState(selectedDoctorState);
+  const [appointmentInfo, setAppointmentInfo] = useRecoilState(appointmentInfoState);
 
   if (selectedDoctor.name === '') {
     navigate('/home');
     return;
   }
 
-  function handlePanelChange(value: Dayjs, mode: CalendarProps<Dayjs>['mode']) {
-    console.log(value.format('YYYY-MM-DD'), mode);
+  function handleDateChange(date: Dayjs) {
+    setAppointmentInfo(prev => ({
+      ...prev,
+      date
+    }));
   }
 
   return (
-    <Flex id='schedule-appointment-page' className="page" justify='center' align='center'>
-      <DoctorCard doctor={selectedDoctor} />
-      <Box width="40%" style={{ border: '1px solid black', borderRadius: 8 }} p='3'>
-        <Calendar fullscreen={false} onPanelChange={handlePanelChange} />
-      </Box>
+    <Flex id='schedule-appointment-page' className="page" direction='column' justify={'center'} align='center'>
+      <Flex justify='center' align='center' gap='5'>
+        <DoctorCard doctor={selectedDoctor} />
 
+        <Box width="40%" style={{ border: '1px solid black', borderRadius: 8 }} p='3'>
+          <Calendar value={appointmentInfo.date} fullscreen={false} onChange={handleDateChange} />
+        </Box>
+
+        <Flex direction='column' gap='3'>
+          <Flex direction='column'>
+            <Text as="p" m="0">Please select appointment option</Text>
+            {/* @ts-ignore */}
+            <SegmentedControl.Root value={appointmentInfo.type} onValueChange={type => setAppointmentInfo(prev => ({ ...prev, type }))}>
+              <SegmentedControl.Item value="teleconsultation">TeleConsultation</SegmentedControl.Item>
+              <SegmentedControl.Item value="clinic-visit">Clinic Visit</SegmentedControl.Item>
+            </SegmentedControl.Root>
+          </Flex>
+
+          <Flex direction='column'>
+            <TimePicker
+              showSecond={false}
+              minuteStep={30}
+              value={appointmentInfo.time}
+              disabledTime={() => ({
+                disabledHours: () => [0,1,2,3,4,5,6,7,8,9,18,19,20,21,22,23]
+              })}
+              onChange={time => setAppointmentInfo(prev => ({ ...prev, time }))}
+            />
+          </Flex>
+        </Flex>
+      </Flex>
+      <Flex align='center' justify='end' width="80%" mt='8' gap='3'>
+        <Button size='3'>Back</Button>
+        <Button size='3' disabled={!(appointmentInfo.date && appointmentInfo.time)}>Proceed</Button>
+      </Flex>
     </Flex>
   )
 }
