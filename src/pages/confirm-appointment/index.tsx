@@ -23,8 +23,8 @@ const ConfirmAppointmentPage = () => {
             { label: 'Department', value: doctor.specialty },
             { label: 'Contact No.', value: doctor.contact },
             { label: 'Location', value: doctor.location },
-            { label: 'Date', value: appointment.date },
-            { label: 'Time', value: appointment.time },
+            { label: 'Date', value: appointment.date?.format('DD/MM/YYYY') },
+            { label: 'Time', value: appointment.time?.format('HH:MM') },
             { label: 'Consultation Mode', value: appointment.type === 'teleconsultation' ? 'TeleConsultation' : 'Clinic Visit' },
           ].map(item => {
             return (
