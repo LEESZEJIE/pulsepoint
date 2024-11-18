@@ -11,7 +11,7 @@ const ConfirmAppointmentPage = () => {
 
   function handleConfirmAppointment() {
     setAppointmentsList(prev => [...prev, { ...doctor, ...appointment }])
-    navigate('/home')
+    navigate('/appointment')
   }
 
   return (

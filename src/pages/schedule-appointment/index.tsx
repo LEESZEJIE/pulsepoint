@@ -48,6 +48,7 @@ const ScheduleAppointmentPage = () => {
 
           <Flex direction='column'>
             <TimePicker
+              hideDisabledOptions
               showSecond={false}
               minuteStep={30}
               value={appointmentInfo.time}

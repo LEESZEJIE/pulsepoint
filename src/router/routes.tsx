@@ -23,6 +23,11 @@ const routes = [
         element: withLazyComponent(React.lazy(() => import('../pages/doctors'))),
     },
     {
+        name: 'appointment',
+        path: '/appointment',
+        element: withLazyComponent(React.lazy(() => import('../pages/appointment'))),
+    },
+    {
         name: 'schedule-appointment',
         path: '/schedule-appointment',
         element: withLazyComponent(React.lazy(() => import('../pages/schedule-appointment'))),
