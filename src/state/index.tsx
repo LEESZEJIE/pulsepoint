@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 import { atom } from "recoil";
 
-interface IDoctor {
+export interface IDoctor {
   name: string;
   contact: string;
   location: string;
@@ -9,7 +9,7 @@ interface IDoctor {
   image: string;
 }
 
-interface IAppointment {
+export interface IAppointment {
   time: Dayjs | null;
   date: Dayjs | undefined;
   type: 'teleconsultation' | 'clinic-visit';
