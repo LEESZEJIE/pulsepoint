@@ -12,7 +12,7 @@ interface IDoctor {
 }
 
 const DoctorsPage = () => {
-    const [doctorsInfo, setDoctorsInfo] = useState<IDoctor[]>(() => {
+    const [doctorsInfo] = useState<IDoctor[]>(() => {
         return doctorsJson.map((item, i) => {
             const index = (i + 1) > 18 ? Math.floor(Math.random() * 18) : (i + 1);
             const image = `/images/doctors/doctor${index}.jpeg`;

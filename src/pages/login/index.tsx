@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     return (
         <Box id='login-page' className="page">
-            <Flex direction='column' justify='center' align='center' width='20%' height='100vh' gap='3' ml='auto' mr='5rem' pt='10rem'>
+            <Flex direction='column' justify='center' align='center' width='20%' height='100vh' gap='3' ml='auto' mr='5rem'>
                 <Text as="p" m="0" align={'center'}>Sign in to continue</Text>
                 
                 <Flex direction={'column'} width={"100%"}>

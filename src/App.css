@@ -1,16 +1,17 @@
 #app {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 #app .bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--blue-1);
-    clip-path: polygon(0 0, 75% 0, 50% 100%, 0 100%);
-    z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--blue-1);
+  clip-path: polygon(0 0, 75% 0, 50% 100%, 0 100%);
+  z-index: -1;
 }

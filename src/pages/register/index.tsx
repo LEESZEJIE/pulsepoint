@@ -49,7 +49,7 @@ const RegisterPage = () => {
 
     return (
         <Box id='register-page' className="page">
-            <Flex direction='column' width='20%' height='100vh' justify='center' align='center' gap='2' ml='auto' mr='3rem' pt='2rem'>
+            <Flex direction='column' width='20%' height='100vh' justify='center' align='center' gap='2' ml='auto' mr='3rem'>
                 {
                     inputFields.map(item => {
                         return (
