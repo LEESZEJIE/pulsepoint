@@ -1,10 +1,14 @@
 import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { useRecoilState } from "recoil";
+import { loggedInUserState, usersListState } from "../../state";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
+  const [usersList] = useRecoilState(usersListState);
+  const [, setLoggedInUser] = useRecoilState(loggedInUserState);
   const [usernameText, setUsernameText] = useState('');
   const [passwordText, setPasswordText] = useState('');
 
@@ -14,6 +18,13 @@ const LoginPage = () => {
       return;
     }
 
+    const found = usersList.find(user => user.fullname === usernameText && user.password === passwordText);
+    if (found == null) {
+      alert('Username or Password Invalid');
+      return;
+    }
+
+    setLoggedInUser(found);
     navigate('/home');
   }
 
