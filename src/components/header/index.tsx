@@ -1,7 +1,7 @@
 import { RxHamburgerMenu } from "react-icons/rx";                
 import { Link, useLocation } from 'react-router-dom';
 import './index.css';
-import { Avatar, Flex } from '@radix-ui/themes';
+import { Avatar, Flex, Text } from '@radix-ui/themes';
 import { useRecoilState } from "recoil";
 import { loggedInUserState } from "../../state";
 
@@ -53,7 +53,7 @@ const Header = () => {
       <Flex align={'center'} gap={'5'}>
         <Flex align={'center'} gap='1'>
           <Avatar fallback={loggedInUser?.fullname[0].toUpperCase() ?? ''} radius='full' />
-          {loggedInUser?.fullname}
+          <Text as="p" m="0" style={{ userSelect: 'none' }}>{loggedInUser?.fullname}</Text>
         </Flex>
         <RxHamburgerMenu size={'20'} />
       </Flex>
