@@ -36,11 +36,11 @@ const LoginPage = () => {
         <Flex direction={'column'} width={"100%"}>
           <Box>
             <Text as="p" m="0">Username</Text>
-            <TextField.Root value={usernameText} onChange={e => setUsernameText(e.target.value)} />
+            <TextField.Root value={usernameText} onChange={e => setUsernameText(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleLogin()} />
           </Box>
           <Box>
             <Text as="p" m="0">Password</Text>
-            <TextField.Root type="password" value={passwordText} onChange={e => setPasswordText(e.target.value)} />
+            <TextField.Root type="password" value={passwordText} onChange={e => setPasswordText(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleLogin()} />
           </Box>
         </Flex>
 

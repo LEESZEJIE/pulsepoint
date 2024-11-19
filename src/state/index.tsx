@@ -23,6 +23,11 @@ export type IUser = {
   address: string;
 }
 
+export const isSidebarOpenState = atom({
+  key: 'isSidebarOpenState',
+  default: false,
+})
+
 export const usersListState = atom<IUser[]>({
   key: 'usersListState',
   default: [

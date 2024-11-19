@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './index.css';
 import { Avatar, Flex, Text } from '@radix-ui/themes';
 import { useRecoilState } from "recoil";
-import { loggedInUserState } from "../../state";
+import { isSidebarOpenState, loggedInUserState } from "../../state";
 
 const links = [
   {
@@ -21,6 +21,7 @@ const links = [
 ]
 
 const Header = () => {
+  const [, setIsSidebarOpen] = useRecoilState(isSidebarOpenState);
   const [loggedInUser] = useRecoilState(loggedInUserState);
   const location = useLocation();
 
@@ -57,7 +58,7 @@ const Header = () => {
           <Avatar fallback={loggedInUser?.fullname[0].toUpperCase() ?? ''} radius='full' />
           <Text as="p" m="0" style={{ userSelect: 'none' }}>{loggedInUser?.fullname}</Text>
         </Flex>
-        <RxHamburgerMenu size={'20'} />
+        <RxHamburgerMenu size={'20'} style={{ cursor: 'pointer' }} onClick={() => setIsSidebarOpen(true)} />
       </Flex>
     </Flex>
   )
