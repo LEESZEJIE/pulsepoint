@@ -25,10 +25,12 @@ const Header = () => {
   const location = useLocation();
 
   const PulsepointLogo = () => (
-    <img src={''} alt='pulsepoint-logo' />
+    <Link to='/home'>
+      <img src={''} alt='pulsepoint-logo' />
+    </Link>
   )
 
-  const showLogoOnly = ['login', 'register', 'confirmappt', 'checkappt'].includes(location.pathname.substring(1));
+  const showLogoOnly = ['login', 'register', 'confirm-appointment'].includes(location.pathname.substring(1));
 
   if (showLogoOnly) {
     return (
