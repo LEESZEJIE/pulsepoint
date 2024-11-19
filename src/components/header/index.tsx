@@ -27,7 +27,7 @@ const Header = () => {
 
   const PulsepointLogo = () => (
     <Link to='/home'>
-      <img src={''} alt='pulsepoint-logo' />
+      <img style={{ height: '100px' }} src={'/images/pulsepoint-logo.png'} alt='pulsepoint-logo' />
     </Link>
   )
 

@@ -1,19 +1,31 @@
 #home-page .doctor-mascot {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+  position: absolute;
+  bottom: 0;
+  left: 100px;
+  width: 450px;
 }
 
 #home-page .vision-mission {
-    position: absolute;
-    width: 45%;
-    text-align: center;
-    right: 10%;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
+  position: absolute;
+  width: 45%;
+  text-align: center;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
 }
 
 #home-page .vision {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+#home-page .vision-mission img {
+  --dim: 80px;
+  width: 80px;
+  height: 80px;
+}
+
+#home-page .vision-mission .vision img {
+  width: 120px;
+  height: 120px;
 }
