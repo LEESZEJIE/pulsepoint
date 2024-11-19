@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil";
 import { loggedInUserState, usersListState } from "../../state";
+import './index.css';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ const LoginPage = () => {
 
   return (
     <Box id='login-page' className="page">
+      <img src={'/images/doctor-register.png'} alt={'register doctor mascot'} className="mascot" />
+
       <Flex direction='column' justify='center' align='center' width='20%' height='100vh' gap='3' ml='auto' mr='5rem'>
         <Text as="p" m="0" align={'center'}>Sign in to continue</Text>
 

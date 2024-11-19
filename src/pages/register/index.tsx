@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { IUser, usersListState } from "../../state";
+import './index.css';
 
 interface IRegisterInfo {
   fullname: string;
@@ -89,6 +90,8 @@ const RegisterPage = () => {
 
   return (
     <Box id='register-page' className="page">
+      <img src={'/images/doctor-register.png'} alt={'register doctor mascot'} className="mascot" />
+
       <Flex direction='column' width='20%' height='100vh' justify='center' align='center' gap='2' ml='auto' mr='3rem'>
         {
           inputFields.map(item => {
