@@ -1,6 +1,8 @@
 import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { IUser, usersListState } from "../../state";
 
 interface IRegisterInfo {
   fullname: string;
@@ -24,6 +26,7 @@ const inputFields = [
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const [usersList, setUsersList] = useRecoilState(usersListState);
   const [registerInfo, setRegisterInfo] = useState<IRegisterInfo>({
     fullname: '',
     nric: '',
@@ -43,8 +46,45 @@ const RegisterPage = () => {
     })
   }
 
+  function checkFieldExists(): boolean {
+    let isExists = false;
+
+    usersList.forEach(user => {
+      const keys = Object.keys(user);
+
+      keys.forEach(key => {
+        if (user[key] === registerInfo[key]) {
+          isExists = true;
+        }
+      })
+    })
+
+    return isExists;
+  }
+
   function handleRegister() {
-    navigate('/home');
+    if (checkFieldExists()) {
+      alert('An account with this information is already registered');
+      return;
+    }
+
+    if (registerInfo.password !== registerInfo.reenterpassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    const address = [registerInfo.address1, registerInfo.address2].join(',')
+    const newAcc: IUser = {
+      fullname: registerInfo.fullname,
+      password: registerInfo.password,
+      nric: registerInfo.nric,
+      contact: registerInfo.contact,
+      address: address.endsWith(',') ? address.substring(0, address.length - 1) : address
+    }
+
+    setUsersList(prev => [...prev, newAcc])
+    alert('Welcome to Pulsepoint! Please login again with your account');
+    navigate('/login');
   }
 
   return (
