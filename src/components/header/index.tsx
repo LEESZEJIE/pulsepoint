@@ -54,10 +54,12 @@ const Header = () => {
         </div>
       </Flex>
       <Flex align={'center'} gap={'5'}>
-        <Flex align={'center'} gap='1'>
-          <Avatar fallback={loggedInUser?.fullname[0].toUpperCase() ?? ''} radius='full' />
-          <Text as="p" m="0" style={{ userSelect: 'none' }}>{loggedInUser?.fullname}</Text>
-        </Flex>
+        <Link to={'/user-details'} style={{ textDecoration: 'none', color: 'unset' }}>
+          <Flex align={'center'} gap='1'>
+            <Avatar fallback={loggedInUser?.fullname[0].toUpperCase() ?? ''} radius='full' />
+            <Text as="p" m="0" style={{ userSelect: 'none' }}>{loggedInUser?.fullname}</Text>
+          </Flex>
+        </Link>
         <RxHamburgerMenu size={'20'} style={{ cursor: 'pointer' }} onClick={() => setIsSidebarOpen(true)} />
       </Flex>
     </Flex>
