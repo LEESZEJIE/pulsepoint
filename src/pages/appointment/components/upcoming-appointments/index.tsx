@@ -1,16 +1,13 @@
 import { Flex } from "@radix-ui/themes"
-import { useRecoilState } from "recoil"
-import { appointmentsListState } from "../../../../state";
 import AppointmentCard from "../appointment-card";
 import dayjs from "dayjs";
+import { IScheduledAppointment } from "../../../../state";
 
-const UpcomingAppointments = () => {
-  const [appointmentsList] = useRecoilState(appointmentsListState);
-
+const UpcomingAppointments = ({ list }: { list: IScheduledAppointment[] }) => {
   return (
     <Flex direction='column' gap='3'>
       {
-        appointmentsList
+        list
         .filter(appt => {
           const now = dayjs();
           const result = now.diff(appt.date, 'days');

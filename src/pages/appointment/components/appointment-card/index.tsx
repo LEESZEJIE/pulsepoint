@@ -3,7 +3,7 @@ import { IAppointment, IDoctor } from '../../../../state'
 import { Button } from 'antd'
 import './index.css'
 
-const AppointmentCard = ({ info, isFinished = false }: { info: IDoctor & IAppointment, isFinished: boolean }) => {
+const AppointmentCard = ({ info, isFinished = false }: { info: IDoctor & IAppointment, isFinished?: boolean }) => {
   return (
     <Flex className='appointment-card' align='center' p='3' gap='3'>
       <Flex direction='column'>
