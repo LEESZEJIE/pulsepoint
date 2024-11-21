@@ -5,9 +5,24 @@ import UpcomingAppointments from "./components/upcoming-appointments";
 import FinishedAppointments from "./components/finished-appointments";
 import { useRecoilState } from "recoil";
 import { appointmentsListState } from "../../state";
+import { useEffect } from "react";
 
 const AppointmentsPage = () => {
-  const [appointmentsList] = useRecoilState(appointmentsListState);
+  const [appointmentsList, setAppointmentsList] = useRecoilState(appointmentsListState);
+
+  useEffect(() => {
+    setAppointmentsList(prevList => {
+      const newList = [...prevList];
+
+      return newList.sort((a, b) => {
+        if (a.date == null || b.date == null) {
+          return 0;
+        }
+
+        return a.date?.diff(b.date);
+      });
+    })
+  }, [])
 
   const tabsItems = [
     {
