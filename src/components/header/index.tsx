@@ -26,7 +26,7 @@ const Header = () => {
   const location = useLocation();
 
   const PulsepointLogo = () => (
-    <Link to='/home'>
+    <Link to={loggedInUser == null ? '#' : '/home'}>
       <img style={{ height: '100px' }} src={'/images/pulsepoint-logo.png'} alt='pulsepoint-logo' />
     </Link>
   )
