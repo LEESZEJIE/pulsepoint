@@ -10,6 +10,12 @@ import { useEffect } from "react";
 const AppointmentsPage = () => {
   const [appointmentsList, setAppointmentsList] = useRecoilState(appointmentsListState);
 
+  function cancelAppointment(index: number): void {
+    setAppointmentsList(prevList => {
+      return [...prevList.slice(0, index), ...prevList.slice(index + 1)];
+    })
+  }
+
   useEffect(() => {
     setAppointmentsList(prevList => {
       const newList = [...prevList];
@@ -28,7 +34,7 @@ const AppointmentsPage = () => {
     {
       key: 'upcoming',
       label: 'Upcoming',
-      children: <UpcomingAppointments list={appointmentsList} />
+      children: <UpcomingAppointments cancelAppointment={cancelAppointment} list={appointmentsList} />
     },
     {
       key: 'finished',

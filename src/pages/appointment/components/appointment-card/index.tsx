@@ -1,9 +1,10 @@
 import { Flex, Text } from '@radix-ui/themes'
 import { IAppointment, IDoctor } from '../../../../state'
-import { Button } from 'antd'
+import { Button, Popconfirm } from 'antd'
 import './index.css'
+import { TiCancel } from "react-icons/ti";
 
-const AppointmentCard = ({ info, isFinished = false }: { info: IDoctor & IAppointment, isFinished?: boolean }) => {
+const AppointmentCard = ({ info, isFinished = false, onCancelAppointment }: { info: IDoctor & IAppointment, isFinished?: boolean, onCancelAppointment?: () => void }) => {
   return (
     <Flex className='appointment-card' align='center' p='3' gap='3'>
       <Flex direction='column'>
@@ -27,6 +28,19 @@ const AppointmentCard = ({ info, isFinished = false }: { info: IDoctor & IAppoin
           </Flex>
         }
       </Flex>
+
+      {
+        !isFinished &&
+          <Popconfirm
+            title="Cancel Appointment"
+            description="Are you sure to canecl this appointment?"
+            onConfirm={() => onCancelAppointment?.()}
+            okText="Yes"
+            cancelText="No"
+          >
+            <TiCancel className='delete-icon' size={32} />
+          </Popconfirm>
+      }
     </Flex>
   )
 }

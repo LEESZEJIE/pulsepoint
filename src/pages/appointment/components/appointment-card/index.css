@@ -3,4 +3,14 @@
   background-color: rgba(240, 240, 240, 0.3);
   border-radius: 8px;
   border: 2px solid rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.appointment-card .delete-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  color: red;
+  cursor: pointer;
 }
