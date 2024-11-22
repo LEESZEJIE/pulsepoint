@@ -32,7 +32,7 @@ const Sidebar = () => {
 
         <Text as="p" m="0" align='center' size='5' style={{ marginBottom: '5rem' }}>Pulsepoint</Text>
 
-        <Button type='primary'>
+        <Button type='primary' onClick={() => { navigate('/feedback'); handleClose()}}>
           Give us Feedback!
         </Button>
 

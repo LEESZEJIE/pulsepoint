@@ -42,6 +42,11 @@ const routes = [
         path: '/user-details',
         element: withLazyComponent(React.lazy(() => import('../pages/user-details'))),
     },
+    {
+        name: 'feedback',
+        path: '/feedback',
+        element: withLazyComponent(React.lazy(() => import('../pages/feedback'))),
+    },
 ]
 
 export default routes;
