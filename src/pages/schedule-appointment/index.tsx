@@ -30,7 +30,7 @@ const ScheduleAppointmentPage = () => {
   return (
     <Flex id='schedule-appointment-page' className="page" direction='column' justify={'center'} align='center'>
       <Flex justify='center' align='center' gap='5'>
-        <DoctorCard doctor={selectedDoctor} />
+        <DoctorCard doctor={selectedDoctor} isDisplay />
 
         <Box width="40%" style={{ border: '1px solid black', borderRadius: 8 }} p='3'>
           <Calendar value={appointmentInfo.date} fullscreen={false} onChange={handleDateChange} />
