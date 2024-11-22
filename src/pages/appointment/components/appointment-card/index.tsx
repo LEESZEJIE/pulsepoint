@@ -1,10 +1,22 @@
 import { Flex, Text } from '@radix-ui/themes'
-import { IAppointment, IDoctor } from '../../../../state'
+import { IAppointment, IDoctor, isRescheduleState, selectedDoctorState } from '../../../../state'
 import { Button, Popconfirm } from 'antd'
 import './index.css'
 import { TiCancel } from "react-icons/ti";
+import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 
 const AppointmentCard = ({ info, isFinished = false, onCancelAppointment }: { info: IDoctor & IAppointment, isFinished?: boolean, onCancelAppointment?: () => void }) => {
+  const navigate = useNavigate();
+  const [, setDoctorInfo] = useRecoilState(selectedDoctorState);
+  const [, setIsReschedule] = useRecoilState(isRescheduleState);
+
+  function handleReschedule() {
+    setDoctorInfo({ ...info });
+    setIsReschedule(true);
+    navigate('/schedule-appointment');
+  }
+
   return (
     <Flex className='appointment-card' align='center' p='3' gap='3'>
       <Flex direction='column'>
@@ -23,7 +35,7 @@ const AppointmentCard = ({ info, isFinished = false, onCancelAppointment }: { in
         {
           !isFinished &&
           <Flex align='center' gap='1'>
-            <Button>Manage</Button>
+            <Button onClick={handleReschedule}>Reschedule</Button>
             <Button>Check-In</Button>
           </Flex>
         }

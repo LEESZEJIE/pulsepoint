@@ -1,17 +1,41 @@
 import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes"
 import { useRecoilState } from "recoil"
-import { appointmentInfoState, appointmentsListState, selectedDoctorState } from "../../state";
+import { appointmentInfoState, appointmentsListState, isRescheduleState, selectedDoctorState } from "../../state";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 const ConfirmAppointmentPage = () => {
+  const idCounter = useRef(1);
   const navigate = useNavigate();
   const [doctor] = useRecoilState(selectedDoctorState);
   const [appointment] = useRecoilState(appointmentInfoState);
   const [, setAppointmentsList] = useRecoilState(appointmentsListState);
+  const [isReschedule, setIsReschedule] = useRecoilState(isRescheduleState);
 
   function handleConfirmAppointment() {
-    setAppointmentsList(prev => [...prev, { ...doctor, ...appointment }])
+    setAppointmentsList(prev => {
+      const newAppt = { id: idCounter.current, ...doctor, ...appointment };
+
+      if (!isReschedule) {
+        return [...prev, newAppt];
+      }
+
+      const foundAppointmentIndex = prev.findIndex(appt => appt.id === newAppt.id);
+      if (foundAppointmentIndex == null || foundAppointmentIndex === -1) {
+        return prev;
+      }
+
+      const modifiedAppt = {
+        ...prev[foundAppointmentIndex],
+        date: appointment.date,
+        time: appointment.time,
+        type: appointment.type,
+      };
+      return [...prev.slice(0, foundAppointmentIndex), modifiedAppt, ...prev.slice(foundAppointmentIndex + 1)];
+    })
+    setIsReschedule(false);
     navigate('/appointment')
+    idCounter.current = idCounter.current + 1;
   }
 
   return (

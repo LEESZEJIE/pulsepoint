@@ -23,7 +23,7 @@ export type IUser = {
   address: string;
 }
 
-export type IScheduledAppointment = IDoctor & IAppointment;
+export type IScheduledAppointment = IDoctor & IAppointment & { id: number };
 
 export const isSidebarOpenState = atom({
   key: 'isSidebarOpenState',
@@ -72,3 +72,8 @@ export const appointmentsListState = atom<IScheduledAppointment[]>({
   key: 'appointmentsListState',
   default: []
 })
+
+export const isRescheduleState = atom({
+  key: 'isRescheduleState',
+  default: false
+});
