@@ -115,11 +115,14 @@ const RegisterPage = () => {
           })
         }
 
-        <Flex mt='5' direction='column' align='end' width={'100%'}>
+        <Flex mt='5' direction='row-reverse' align='right' width={'100%'} gap='5'>
           <Button onClick={handleRegister}>
             Register
           </Button>
-        </Flex>
+          <Button size='2' onClick={() => navigate('/login')}>
+            Back
+            </Button>
+          </Flex>
       </Flex>
 
     </Box>

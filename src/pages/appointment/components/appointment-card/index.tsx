@@ -1,13 +1,14 @@
 import { Flex, Text } from '@radix-ui/themes'
 import { IAppointment, IDoctor, isRescheduleState, selectedDoctorState } from '../../../../state'
-import { Button, Popconfirm } from 'antd'
+import { Button, message, Popconfirm } from 'antd'
 import './index.css'
-import { TiCancel } from "react-icons/ti";
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
+import { FaRegTrashAlt } from "react-icons/fa";
 
 const AppointmentCard = ({ info, isFinished = false, onCancelAppointment }: { info: IDoctor & IAppointment, isFinished?: boolean, onCancelAppointment?: () => void }) => {
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
   const [, setDoctorInfo] = useRecoilState(selectedDoctorState);
   const [, setIsReschedule] = useRecoilState(isRescheduleState);
 
@@ -19,6 +20,7 @@ const AppointmentCard = ({ info, isFinished = false, onCancelAppointment }: { in
 
   return (
     <Flex className='appointment-card' align='center' p='3' gap='3'>
+      {contextHolder}
       <Flex direction='column'>
         <Text as="p" m="0" size="5" weight="bold" align='center'>{info.date?.date()}</Text>
         <Text as="p" m="0" size="5" weight="bold" align='center'>{info.date?.format('MMM')}</Text>
@@ -36,7 +38,7 @@ const AppointmentCard = ({ info, isFinished = false, onCancelAppointment }: { in
           !isFinished &&
           <Flex align='center' gap='1'>
             <Button onClick={handleReschedule}>Reschedule</Button>
-            <Button>Check-In</Button>
+            <Button onClick={() => messageApi.info('Service Unavailable. Please try again in future versions!')}>Check-In</Button>
           </Flex>
         }
       </Flex>
@@ -49,8 +51,9 @@ const AppointmentCard = ({ info, isFinished = false, onCancelAppointment }: { in
             onConfirm={() => onCancelAppointment?.()}
             okText="Yes"
             cancelText="No"
+            placement='topRight'
           >
-            <TiCancel className='delete-icon' size={32} />
+            <FaRegTrashAlt className='delete-icon' size={20} />
           </Popconfirm>
       }
     </Flex>

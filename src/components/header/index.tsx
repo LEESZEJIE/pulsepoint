@@ -42,7 +42,7 @@ const Header = () => {
   }
 
   return (
-    <Flex id='header' align={'center'} justify={'between'}>
+    <Flex id='header' align={'center'} justify={'between'} py='5'>
       <Flex align={'center'} gap={'5'}>
         <PulsepointLogo />
         <div className='links'>

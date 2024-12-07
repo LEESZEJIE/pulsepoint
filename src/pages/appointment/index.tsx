@@ -49,6 +49,16 @@ const AppointmentsPage = () => {
         <Tabs defaultActiveKey="upcoming" items={tabsItems} />
         { appointmentsList.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> }
       </Flex>
+
+      <img
+        src="/images/doctor-register.png"
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: 900
+        }}
+      />
     </Box>
   )
 }
