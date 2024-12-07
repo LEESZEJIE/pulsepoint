@@ -63,7 +63,17 @@ const RegisterPage = () => {
     return isExists;
   }
 
+  function checkAllFieldsFilled(): boolean {
+    const { fullname, nric, contact, address1, password, reenterpassword } = registerInfo;
+    return !!fullname && !!nric && !!contact && !!address1 && !!password && !!reenterpassword;
+  }
+
   function handleRegister() {
+    if (!checkAllFieldsFilled()) {
+      alert('Please check that all fields are filled in.');
+      return;
+    }
+
     if (checkFieldExists()) {
       alert('An account with this information is already registered');
       return;
