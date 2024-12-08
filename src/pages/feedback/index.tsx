@@ -3,6 +3,7 @@ import { Flex, Text, TextArea } from "@radix-ui/themes";
 import { Button, message } from "antd";
 import { useRecoilState } from 'recoil';
 import { loggedInUserState } from '../../state';
+import './index.css';
 
 const FeedbackPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -30,11 +31,16 @@ const FeedbackPage = () => {
         <Text as="p" m="0" align='center' size='8'>We would like your feedback to serve you better!</Text>
         <Text as="p" m="0" align='center' size='6'>How do you think about our page?</Text>
 
-        <Flex align='center' gap='5' className="emojis">
+        <Flex justify={'center'} align='center' my='3' gap='5' className="emojis">
+          <Button type='link'>😊</Button>
+          <Button type='link'>🙂</Button>
+          <Button type='link'>😞</Button>
+          <Button type='link'>😡</Button>
+          <Button type='link'>🤯</Button>
         </Flex>
 
         <Text as="p" m="0" align='center'>Please leave your message below!</Text>
-        <TextArea resize={'vertical'} />
+        <TextArea resize={'vertical'} style={{ height: '300px' }} />
 
         <Flex justify='end'>
           <Button>Submit</Button>
