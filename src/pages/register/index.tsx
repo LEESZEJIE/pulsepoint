@@ -69,11 +69,6 @@ const RegisterPage = () => {
   }
 
   function handleRegister() {
-    if (!checkAllFieldsFilled()) {
-      alert('Please check that all fields are filled in.');
-      return;
-    }
-
     if (checkFieldExists()) {
       alert('An account with this information is already registered');
       return;
@@ -98,6 +93,8 @@ const RegisterPage = () => {
     navigate('/login');
   }
 
+  const registerDisabled = !checkAllFieldsFilled();
+
   return (
     <Box id='register-page' className="page">
       <img src={'/images/doctor-register.png'} alt={'register doctor mascot'} className="mascot" />
@@ -115,8 +112,8 @@ const RegisterPage = () => {
           })
         }
 
-        <Flex mt='5' direction='row-reverse' align='right' width={'100%'} gap='5'>
-          <Button onClick={handleRegister}>
+        <Flex mt='5' direction='row-reverse' align='end' width={'100%'} gap='5'>
+          <Button onClick={handleRegister} disabled={registerDisabled}>
             Register
           </Button>
           <Button size='2' onClick={() => navigate('/login')}>
