@@ -1,13 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex, Text, TextArea } from "@radix-ui/themes";
 import { Button, message } from "antd";
 import { useRecoilState } from 'recoil';
 import { loggedInUserState } from '../../state';
 import './index.css';
+import { useNavigate } from 'react-router-dom';
 
 const FeedbackPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [loggedInUser] = useRecoilState(loggedInUserState);
+  const [textAreaText, setTextAreaText] = useState('');
+  const navigate = useNavigate();
+
+  function handleSubmit() {
+    navigate('/feedback-success');
+  }
 
   useEffect(() => {
     if (loggedInUser != null) {
@@ -32,18 +39,18 @@ const FeedbackPage = () => {
         <Text as="p" m="0" align='center' size='6'>How do you think about our page?</Text>
 
         <Flex justify={'center'} align='center' my='3' gap='5' className="emojis">
-          <Button type='link'>😊</Button>
-          <Button type='link'>🙂</Button>
-          <Button type='link'>😞</Button>
-          <Button type='link'>😡</Button>
-          <Button type='link'>🤯</Button>
+          <Button type='link' onClick={() => setTextAreaText('Very easy to use!')}>😊</Button>
+          <Button type='link' onClick={() => setTextAreaText('Few hiccups here and there')}>🙂</Button>
+          <Button type='link' onClick={() => setTextAreaText('Unexpectedly difficult to use')}>😞</Button>
+          <Button type='link' onClick={() => setTextAreaText('Had a hard time using the system!')}>😡</Button>
+          <Button type='link' onClick={() => setTextAreaText('BEST SYSTEM EVER OMG THE PROGRAMMER MUST BE VERY SMART SIA')}>🤯</Button>
         </Flex>
 
         <Text as="p" m="0" align='center'>Please leave your message below!</Text>
-        <TextArea resize={'vertical'} style={{ height: '300px' }} />
+        <TextArea value={textAreaText} onChange={e => setTextAreaText(prev => prev + e.target.value)} resize={'vertical'} style={{ height: '300px' }} />
 
         <Flex justify='end'>
-          <Button>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </Flex>
       </Flex>
 

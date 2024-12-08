@@ -47,6 +47,11 @@ const routes = [
         path: '/feedback',
         element: withLazyComponent(React.lazy(() => import('../pages/feedback'))),
     },
+    {
+        name: 'feedback-success',
+        path: '/feedback-success',
+        element: withLazyComponent(React.lazy(() => import('../pages/feedback-success'))),
+    },
 ]
 
 export default routes;
