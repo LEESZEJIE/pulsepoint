@@ -3,23 +3,37 @@ import { useRecoilState } from "recoil"
 import { loggedInUserState } from "../../state";
 import { useNavigate } from "react-router-dom";
 import './index.css'
-import { Button } from "antd";
+import { Button, message } from "antd";
+import React, { useEffect } from "react";
 
 const UserDetailsPage = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState(loggedInUserState);
-
-  if (user == null) {
-    navigate('/login')
-    return;
-  }
 
   function handleLogout() {
     setUser(null);
     navigate('/login')
   }
 
-  const { fullname, nric, contact, address } = user;
+  useEffect(() => {
+    if (user != null) {
+      return;
+    }
+
+    messageApi.info('Nothing to view in Guest Mode');
+  }, [])
+
+  if (user == null) {
+    return (
+      <React.Fragment>
+        {contextHolder}
+      </React.Fragment>
+    );
+  }
+
+  const { fullname, nric, contact, address } = user ?? {};
 
   return (
     <Flex id='user-details' className="page" direction='column' gap='5'>

@@ -56,8 +56,8 @@ const Header = () => {
       <Flex align={'center'} gap={'5'}>
         <Link to={'/user-details'} style={{ textDecoration: 'none', color: 'unset' }}>
           <Flex align={'center'} gap='1'>
-            <Avatar fallback={loggedInUser?.fullname[0].toUpperCase() ?? ''} radius='full' />
-            <Text as="p" m="0" style={{ userSelect: 'none' }}>{loggedInUser?.fullname}</Text>
+            <Avatar fallback={loggedInUser?.fullname[0].toUpperCase() ?? ''} radius='full' src={loggedInUser == null ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREh8TIFWYXVR4v4TeSVn20PTQ5WNaF5IteeQ&s' : ''} />
+            <Text as="p" m="0" style={{ userSelect: 'none' }}>{loggedInUser?.fullname ?? 'Guest'}</Text>
           </Flex>
         </Link>
         <RxHamburgerMenu size={'20'} style={{ cursor: 'pointer' }} onClick={() => setIsSidebarOpen(true)} />

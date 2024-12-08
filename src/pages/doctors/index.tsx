@@ -1,7 +1,10 @@
 import { Box, Flex, ScrollArea } from '@radix-ui/themes';
 import doctorsJson from '../../data/Doctor Information.json';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DoctorCard from '../../components/doctor-card';
+import { message } from 'antd';
+import { useRecoilState } from 'recoil';
+import { loggedInUserState } from '../../state';
 
 interface IDoctor {
   name: string;
@@ -12,6 +15,9 @@ interface IDoctor {
 }
 
 const DoctorsPage = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const [loggedInUser] = useRecoilState(loggedInUserState);
+
   const [doctorsInfo] = useState<IDoctor[]>(() => {
     return doctorsJson.map((item, i) => {
       const index = (i + 1) > 18 ? Math.floor(Math.random() * 18) : (i + 1);
@@ -26,6 +32,22 @@ const DoctorsPage = () => {
       }
     })
   })
+
+  useEffect(() => {
+    if (loggedInUser != null) {
+      return;
+    }
+
+    messageApi.info('Please login to book an appointment with our doctors');
+  }, [loggedInUser]);
+
+  if (loggedInUser == null) {
+    return (
+      <React.Fragment>
+        {contextHolder}
+      </React.Fragment>
+    );
+  }
 
   return (
     <Box id='doctors-page' className='page'>

@@ -29,6 +29,11 @@ const LoginPage = () => {
     navigate('/home');
   }
 
+  function handleGuestLogin() {
+    setLoggedInUser(null);
+    navigate('/home');
+  }
+
   return (
     <Box id='login-page' className="page">
       <img src={'/images/doctor-register.png'} alt={'register doctor mascot'} className="mascot" />
@@ -48,7 +53,7 @@ const LoginPage = () => {
         </Flex>
 
         <Flex justify={'end'} align={'center'} gap="2">
-          <Link to={'/home'}>Continue as Guest</Link>
+          <Link to={'/home'} onClick={handleGuestLogin}>Continue as Guest</Link>
           <Button onClick={handleLogin}>
             Login
           </Button>

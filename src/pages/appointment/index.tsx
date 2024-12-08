@@ -1,13 +1,15 @@
 import { Box, Flex } from "@radix-ui/themes";
-import { Empty, Tabs } from "antd";
+import { Empty, message, Tabs } from "antd";
 import './index.css';
 import UpcomingAppointments from "./components/upcoming-appointments";
 import FinishedAppointments from "./components/finished-appointments";
 import { useRecoilState } from "recoil";
-import { appointmentsListState } from "../../state";
+import { appointmentsListState, loggedInUserState } from "../../state";
 import { useEffect } from "react";
 
 const AppointmentsPage = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const [loggedInUser] = useRecoilState(loggedInUserState);
   const [appointmentsList, setAppointmentsList] = useRecoilState(appointmentsListState);
 
   function cancelAppointment(index: number): void {
@@ -15,6 +17,14 @@ const AppointmentsPage = () => {
       return [...prevList.slice(0, index), ...prevList.slice(index + 1)];
     })
   }
+
+  useEffect(() => {
+    if (loggedInUser != null) {
+      return;
+    }
+
+    messageApi.info('Please login to view your appointments');
+  }, [])
 
   useEffect(() => {
     setAppointmentsList(prevList => {
@@ -45,6 +55,7 @@ const AppointmentsPage = () => {
 
   return (
     <Box id='appointments-page' className='page'>
+      {contextHolder}
       <Flex direction='column' className="appointments-container" p='3'>
         <Tabs defaultActiveKey="upcoming" items={tabsItems} />
         { appointmentsList.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> }

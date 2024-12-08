@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Flex, Text, TextArea } from "@radix-ui/themes";
-import { Button } from "antd";
+import { Button, message } from "antd";
+import { useRecoilState } from 'recoil';
+import { loggedInUserState } from '../../state';
 
 const FeedbackPage = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const [loggedInUser] = useRecoilState(loggedInUserState);
+
+  useEffect(() => {
+    if (loggedInUser != null) {
+      return;
+    }
+
+    messageApi.info('Please login to give feedback');
+  }, [])
+
+  if (loggedInUser == null) {
+    return (
+      <React.Fragment>
+        {contextHolder}
+      </React.Fragment>
+    );
+  }
+
   return (
     <React.Fragment >
       <Flex id='feedback-page' className="page" direction='column' gap='3' width='40%' style={{ paddingTop: '8rem', marginLeft: '8rem' }}>
