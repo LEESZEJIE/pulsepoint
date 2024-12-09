@@ -24,7 +24,7 @@ const DoctorCard = ({ doctor, isDisplay = false }: { doctor: IDoctor, isDisplay?
     <Flex
       className="doctor-card"
       direction={isDisplay ? 'column' : 'row'}
-      width={isDisplay ? '300px' : '400px'}
+      width={isDisplay ? '300px' : '30%'}
       height={isDisplay ? 'auto' : '180px'}
       p='3'
       gap='3'
