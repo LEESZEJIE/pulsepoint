@@ -2,7 +2,7 @@ import { Box, Flex, ScrollArea, Text } from '@radix-ui/themes';
 import doctorsJson from '../../data/Doctor Information.json';
 import React, { useEffect, useMemo, useState } from 'react';
 import DoctorCard from '../../components/doctor-card';
-import { Input, message } from 'antd';
+import { Input, message, Select } from 'antd';
 import { useRecoilState } from 'recoil';
 import { loggedInUserState } from '../../state';
 
@@ -21,6 +21,11 @@ const DoctorsPage = () => {
   const [searchDoctorName, setSearchDoctorName] = useState('');
   const [searchDepartment, setSearchDepartment] = useState('');
 
+  const departments = useMemo(() => {
+    const specialties = Array.from(new Set(doctorsJson.map(x => x.Specialty)));
+    return specialties.map(x => ({ value: x, label: x }));
+  }, []);
+
   const originalDoctorsInfo = useMemo(() => {
     return doctorsJson.map((item, i) => {
       const index = (i + 1) > 18 ? Math.floor(Math.random() * 18) : (i + 1);
@@ -38,10 +43,24 @@ const DoctorsPage = () => {
   const [doctorsInfo, setDoctorsInfo] = useState<IDoctor[]>([...originalDoctorsInfo])
 
   useEffect(() => {
+    if (searchDoctorName === '') {
+      return;
+    }
+
     setDoctorsInfo(() => {
       return originalDoctorsInfo.filter(doctor => doctor.name.split(' ').join('').toLowerCase().includes(searchDoctorName));
     });
   }, [searchDoctorName]);
+
+  useEffect(() => {
+    if (searchDepartment === '') {
+      return;
+    }
+
+    setDoctorsInfo(() => {
+      return originalDoctorsInfo.filter(doctor => doctor.specialty === searchDepartment);
+    })
+  }, [searchDepartment])
 
   useEffect(() => {
     if (loggedInUser != null) {
@@ -62,14 +81,18 @@ const DoctorsPage = () => {
   return (
     <Box id='doctors-page' className='page'>
       <Flex align='center' gap='5' pl='5' my='3'>
-        <Box>
+        <Box width='230px'>
           <Text as="p" m="0" size='2'>Doctor Name:</Text>
           <Input placeholder='Search doctor name' value={searchDoctorName} onChange={e => setSearchDoctorName(e.target.value)} />
         </Box>
 
-        <Box>
+        <Box width='230px'>
           <Text as="p" m="0" size='2'>Department:</Text>
-          <Input placeholder='Search department' value={searchDepartment} onChange={e => setSearchDepartment(e.target.value)} />
+          <Select
+            style={{ width: '100%' }}
+            options={departments}
+            onChange={e => setSearchDepartment(e)}
+          />
         </Box>
       </Flex>
 
