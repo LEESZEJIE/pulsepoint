@@ -23,7 +23,8 @@ const AppointmentsPage = () => {
       return;
     }
 
-    messageApi.info('Please login to view your appointments');
+    setAppointmentsList([]);
+    messageApi.info('Please login/sign up to view your appointments');
   }, [])
 
   useEffect(() => {
