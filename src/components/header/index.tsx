@@ -54,7 +54,7 @@ const Header = () => {
         </div>
       </Flex>
       <Flex align={'center'} gap={'5'}>
-        <Link to={'/user-details'} style={{ textDecoration: 'none', color: 'unset' }}>
+        <Link to={loggedInUser == null ? '/login' : '/user-details'} style={{ textDecoration: 'none', color: 'unset' }}>
           <Flex align={'center'} gap='1'>
             <Avatar fallback={loggedInUser?.fullname[0].toUpperCase() ?? ''} radius='full' src={loggedInUser == null ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREh8TIFWYXVR4v4TeSVn20PTQ5WNaF5IteeQ&s' : ''} />
             <Text as="p" m="0" style={{ userSelect: 'none' }}>{loggedInUser?.fullname ?? 'Guest'}</Text>
