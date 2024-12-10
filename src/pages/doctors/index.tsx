@@ -48,7 +48,11 @@ const DoctorsPage = () => {
     }
 
     setDoctorsInfo(() => {
-      return originalDoctorsInfo.filter(doctor => doctor.name.split(' ').join('').toLowerCase().includes(searchDoctorName));
+      return originalDoctorsInfo.filter(doctor => {
+        const matchRegex = doctor.name.match(new RegExp(searchDoctorName, 'i'))
+        const matchFuzzy = doctor.name.split(' ').join('').toLowerCase().includes(searchDoctorName);
+        return matchRegex || matchFuzzy || searchDoctorName === '';
+      });
     });
   }, [searchDoctorName]);
 
