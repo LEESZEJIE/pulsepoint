@@ -47,7 +47,7 @@ const FeedbackPage = () => {
         </Flex>
 
         <Text as="p" m="0" align='center'>Please leave your message below!</Text>
-        <TextArea value={textAreaText} onChange={e => setTextAreaText(prev => prev + e.target.value)} resize={'vertical'} style={{ height: '300px' }} />
+        <TextArea value={textAreaText} onChange={e => setTextAreaText(e.target.value)} resize={'vertical'} style={{ height: '300px' }} />
 
         <Flex justify='end'>
           <Button onClick={handleSubmit}>Submit</Button>
