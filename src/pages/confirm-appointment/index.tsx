@@ -64,7 +64,7 @@ const ConfirmAppointmentPage = () => {
         }
       </Flex>
       <Flex width='80%' align='center' justify='end' mt='5' gap='3'>
-        <Button onClick={() => navigate('/confirm-schedule')}>Back</Button>
+        <Button onClick={() => navigate('/confirm-appointment')}>Back</Button>
         <Button onClick={handleConfirmAppointment}>Confirm</Button>
       </Flex>
     </Flex>
