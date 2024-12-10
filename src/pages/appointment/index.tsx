@@ -1,21 +1,41 @@
 import { Box, Flex } from "@radix-ui/themes";
-import { Empty, message, Tabs } from "antd";
+import { Button, Empty, message, Modal, Popconfirm, Tabs } from "antd";
 import './index.css';
 import UpcomingAppointments from "./components/upcoming-appointments";
 import FinishedAppointments from "./components/finished-appointments";
 import { useRecoilState } from "recoil";
 import { appointmentsListState, loggedInUserState } from "../../state";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FaMicrophone, FaPhone } from "react-icons/fa6";
+import { IoMicOff } from "react-icons/io5";
+import { BsCameraVideoFill, BsCameraVideoOff } from "react-icons/bs";
 
 const AppointmentsPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [loggedInUser] = useRecoilState(loggedInUserState);
   const [appointmentsList, setAppointmentsList] = useRecoilState(appointmentsListState);
 
+  const [isCallingDoctor, setIsCallingDoctor] = useState(false);
+  const [isMicOn, setIsMicOn] = useState(false);
+  const [isCamOn, setIsCamOn] = useState(false);
+  const [callDoctorImage, setCallDoctorImage] = useState('');
+
   function cancelAppointment(index: number): void {
     setAppointmentsList(prevList => {
       return [...prevList.slice(0, index), ...prevList.slice(index + 1)];
     })
+  }
+
+  function handleStartCall(doctorImage: string) {
+    setIsCallingDoctor(true);
+    setCallDoctorImage(doctorImage);
+    setIsMicOn(false);
+    setIsCamOn(false);
+  }
+
+  function handleEndCall() {
+    setIsCallingDoctor(false);
+    setCallDoctorImage('');
   }
 
   useEffect(() => {
@@ -45,7 +65,7 @@ const AppointmentsPage = () => {
     {
       key: 'upcoming',
       label: 'Upcoming',
-      children: <UpcomingAppointments cancelAppointment={cancelAppointment} list={appointmentsList} />
+      children: <UpcomingAppointments cancelAppointment={cancelAppointment} list={appointmentsList} startCall={handleStartCall} />
     },
     {
       key: 'finished',
@@ -71,6 +91,65 @@ const AppointmentsPage = () => {
           width: 900
         }}
       />
+
+      <Modal
+        open={isCallingDoctor}
+        centered
+        closable={false}
+        okButtonProps={{ style: { display: 'none' } }}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        width={'80%'}
+      >
+        <Flex width='100%' style={{ gap: 15 }} position={'relative'}>
+          <img
+            className="video-pic"
+            src={callDoctorImage}
+          />
+
+          <img
+            className="video-pic"
+            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREh8TIFWYXVR4v4TeSVn20PTQ5WNaF5IteeQ&s'}
+          />
+
+          <Flex align={'center'} style={{ gap: 5 }} className="video-call-buttons">
+            <Button
+              size={"large"}
+              type={ isMicOn ? 'primary' : 'default'}
+              onClick={() => setIsMicOn(maybe => !maybe)}
+            >
+              {
+                isMicOn
+                  ? <FaMicrophone />
+                  : <IoMicOff />
+              }
+            </Button>
+            <Button
+              size={"large"}
+              type={ isCamOn ? 'primary' : 'default'}
+              onClick={() => setIsCamOn(maybe => !maybe)}
+            >
+              {
+                isCamOn
+                  ? <BsCameraVideoFill />
+                  : <BsCameraVideoOff />
+              }
+            </Button>
+
+            <Popconfirm
+              title="Leave Call"
+              description="Are you sure you want to leave the call? Your appointment will be marked as completed."
+              onConfirm={handleEndCall}
+              okText="End call"
+              cancelText="Stay in call"
+            >
+              <Button size={"large"} type='primary' danger>
+                <FaPhone />
+              </Button>
+            </Popconfirm>
+
+          </Flex>
+        </Flex>
+      </Modal>
     </Box>
   )
 }
