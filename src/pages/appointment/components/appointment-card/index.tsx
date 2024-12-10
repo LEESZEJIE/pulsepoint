@@ -1,12 +1,14 @@
 import { Flex, Text } from '@radix-ui/themes'
-import { IAppointment, IDoctor, isRescheduleState, selectedDoctorState } from '../../../../state'
+import { IScheduledAppointment, isRescheduleState, selectedDoctorState } from '../../../../state'
 import { Button, Popconfirm } from 'antd'
 import './index.css'
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const AppointmentCard = ({ info, isFinished = false, onCancelAppointment, startCall }: { info: IDoctor & IAppointment, isFinished?: boolean, onCancelAppointment?: () => void, startCall: (image: string) => void }) => {
+const AppointmentCard = ({ info, isFinished = false, onCancelAppointment, startCall }: { info: IScheduledAppointment, isFinished?: boolean, onCancelAppointment?: () => void, startCall?: (id: number, image: string) => void }) => {
+  console.log(info);
+
   const navigate = useNavigate();
   const [, setDoctorInfo] = useRecoilState(selectedDoctorState);
   const [, setIsReschedule] = useRecoilState(isRescheduleState);
@@ -39,7 +41,7 @@ const AppointmentCard = ({ info, isFinished = false, onCancelAppointment, startC
 
             <Popconfirm
               title={`Start Call with ${info.name}?`}
-              onConfirm={() => startCall(info.image)}
+              onConfirm={() => startCall?.(info.id, info.image)}
               okText="Start Call"
               cancelText="Not Yet"
               >

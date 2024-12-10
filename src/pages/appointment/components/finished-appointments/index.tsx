@@ -11,7 +11,7 @@ const FinishedAppointments = ({ list }: { list: IScheduledAppointment[] }) => {
         .filter(appt => {
           const now = dayjs();
           const result = now.diff(appt.date, 'days');
-          return result > 0;
+          return result > 0 || appt.isCompleted;
         })
         .map(appt => {
           return <AppointmentCard isFinished info={appt} />

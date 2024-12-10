@@ -13,6 +13,7 @@ export interface IAppointment {
   time: Dayjs | null;
   date: Dayjs | undefined;
   type: 'teleconsultation' | 'clinic-visit';
+  isCompleted: boolean;
 }
 
 export type IUser = {
@@ -65,6 +66,7 @@ export const appointmentInfoState = atom<IAppointment>({
     time: null,
     date: undefined,
     type: 'teleconsultation',
+    isCompleted: false
   }
 })
 

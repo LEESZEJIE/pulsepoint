@@ -19,6 +19,7 @@ const AppointmentsPage = () => {
   const [isMicOn, setIsMicOn] = useState(false);
   const [isCamOn, setIsCamOn] = useState(false);
   const [callDoctorImage, setCallDoctorImage] = useState('');
+  const [appointmentId, setAppointmentId] = useState(0);
 
   function cancelAppointment(index: number): void {
     setAppointmentsList(prevList => {
@@ -26,16 +27,29 @@ const AppointmentsPage = () => {
     })
   }
 
-  function handleStartCall(doctorImage: string) {
+  function handleStartCall(id: number, doctorImage: string) {
     setIsCallingDoctor(true);
     setCallDoctorImage(doctorImage);
     setIsMicOn(false);
     setIsCamOn(false);
+    setAppointmentId(id);
   }
 
   function handleEndCall() {
     setIsCallingDoctor(false);
     setCallDoctorImage('');
+    setAppointmentsList(prev => {
+      const newList = [...prev];
+
+      const apptIndex = newList.findIndex(appt => appt.id === appointmentId);
+      if (apptIndex === -1) {
+        return newList;
+      }
+
+      const appt = { ...newList[apptIndex] };
+      appt.isCompleted = true;
+      return [...newList.slice(0, apptIndex), appt, ...newList.slice(apptIndex + 1)];
+    })
   }
 
   useEffect(() => {

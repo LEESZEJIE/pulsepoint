@@ -25,11 +25,12 @@ const ConfirmAppointmentPage = () => {
         return prev;
       }
 
-      const modifiedAppt = {
+      const modifiedAppt: typeof prev[number] = {
         ...prev[foundAppointmentIndex],
         date: appointment.date,
         time: appointment.time,
         type: appointment.type,
+        isCompleted: false,
       };
       return [...prev.slice(0, foundAppointmentIndex), modifiedAppt, ...prev.slice(foundAppointmentIndex + 1)];
     })

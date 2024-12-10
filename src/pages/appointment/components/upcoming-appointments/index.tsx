@@ -3,7 +3,7 @@ import AppointmentCard from "../appointment-card";
 import dayjs from "dayjs";
 import { IScheduledAppointment } from "../../../../state";
 
-const UpcomingAppointments = ({ list, cancelAppointment, startCall }: { list: IScheduledAppointment[], cancelAppointment: (i: number) => void, startCall: (image: string) => void }) => {
+const UpcomingAppointments = ({ list, cancelAppointment, startCall }: { list: IScheduledAppointment[], cancelAppointment: (i: number) => void, startCall: (id: number, image: string) => void }) => {
   return (
     <Flex direction='column' gap='3'>
       {
@@ -11,7 +11,7 @@ const UpcomingAppointments = ({ list, cancelAppointment, startCall }: { list: IS
         .filter(appt => {
           const now = dayjs();
           const result = now.diff(appt.date, 'days');
-          return result <= 0;
+          return result <= 0 && !appt.isCompleted;
         })
         .map((appt, i) => {
           return <AppointmentCard startCall={startCall} info={appt} onCancelAppointment={() => cancelAppointment(i)} />
