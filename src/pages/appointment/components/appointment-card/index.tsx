@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { FaRegTrashAlt } from "react-icons/fa";
 import dayjs from 'dayjs';
+import React from 'react';
 
 const AppointmentCard = ({
   info,
@@ -70,12 +71,10 @@ const AppointmentCard = ({
             <Flex align='center' gap='1'>
               {
                 isUpcoming &&
-                  <Button onClick={handleReschedule}>Reschedule</Button>
-              }
-
-              {
-                (isUpcoming ?? false) &&
-                  <Button onClick={() => handleToOnGoing(info.id)}>Bring to On Going</Button>
+                  <React.Fragment>
+                    <Button onClick={handleReschedule}>Reschedule</Button>
+                    <Button onClick={() => handleToOnGoing(info.id)}>Bring to On Going</Button>
+                  </React.Fragment>
               }
 
               {
