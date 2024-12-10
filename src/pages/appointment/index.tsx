@@ -1,4 +1,4 @@
-import { Box, Flex } from "@radix-ui/themes";
+import { Box, Flex, Text } from "@radix-ui/themes";
 import { Button, Empty, message, Modal, Popconfirm, Tabs } from "antd";
 import './index.css';
 import UpcomingAppointments from "./components/upcoming-appointments";
@@ -9,17 +9,29 @@ import { useEffect, useState } from "react";
 import { FaMicrophone, FaPhone } from "react-icons/fa6";
 import { IoMicOff } from "react-icons/io5";
 import { BsCameraVideoFill, BsCameraVideoOff } from "react-icons/bs";
+import OnGoingAppointments from "./components/ongoing-appointments";
 
 const AppointmentsPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [loggedInUser] = useRecoilState(loggedInUserState);
   const [appointmentsList, setAppointmentsList] = useRecoilState(appointmentsListState);
 
-  const [isCallingDoctor, setIsCallingDoctor] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMicOn, setIsMicOn] = useState(false);
   const [isCamOn, setIsCamOn] = useState(false);
   const [callDoctorImage, setCallDoctorImage] = useState('');
   const [appointmentId, setAppointmentId] = useState(0);
+
+  const [isCheckInQR, setIsCheckInQR] = useState(false);
+
+  function resetEverything() {
+    setIsModalOpen(false);
+    setIsMicOn(false);
+    setIsCamOn(false);
+    setCallDoctorImage('');
+    setAppointmentId(0);
+    setIsCheckInQR(false);
+  }
 
   function cancelAppointment(index: number): void {
     setAppointmentsList(prevList => {
@@ -28,7 +40,7 @@ const AppointmentsPage = () => {
   }
 
   function handleStartCall(id: number, doctorImage: string) {
-    setIsCallingDoctor(true);
+    setIsModalOpen(true);
     setCallDoctorImage(doctorImage);
     setIsMicOn(false);
     setIsCamOn(false);
@@ -36,7 +48,7 @@ const AppointmentsPage = () => {
   }
 
   function handleEndCall() {
-    setIsCallingDoctor(false);
+    setIsModalOpen(false);
     setCallDoctorImage('');
     setAppointmentsList(prev => {
       const newList = [...prev];
@@ -50,6 +62,11 @@ const AppointmentsPage = () => {
       appt.isCompleted = true;
       return [...newList.slice(0, apptIndex), appt, ...newList.slice(apptIndex + 1)];
     })
+  }
+
+  function handleQRCheckIn() {
+    setIsModalOpen(true);
+    setIsCheckInQR(true);
   }
 
   useEffect(() => {
@@ -79,7 +96,12 @@ const AppointmentsPage = () => {
     {
       key: 'upcoming',
       label: 'Upcoming',
-      children: <UpcomingAppointments cancelAppointment={cancelAppointment} list={appointmentsList} startCall={handleStartCall} />
+      children: <UpcomingAppointments cancelAppointment={cancelAppointment} list={appointmentsList} />
+    },
+    {
+      key: 'ongoing',
+      label: 'On-Going',
+      children: <OnGoingAppointments list={appointmentsList} startCall={handleStartCall} checkInQR={handleQRCheckIn} />
     },
     {
       key: 'finished',
@@ -107,62 +129,79 @@ const AppointmentsPage = () => {
       />
 
       <Modal
-        open={isCallingDoctor}
+        open={isModalOpen}
         centered
-        closable={false}
+        closable={isCheckInQR}
+        onCancel={resetEverything}
         okButtonProps={{ style: { display: 'none' } }}
         cancelButtonProps={{ style: { display: 'none' } }}
-        width={'80%'}
+        width={isCheckInQR ? '30%' : '80%'}
       >
-        <Flex width='100%' style={{ gap: 15 }} position={'relative'}>
-          <img
-            className="video-pic"
-            src={callDoctorImage}
-          />
+        {
+          !isCheckInQR &&
+            <Flex width='100%' style={{ gap: 15 }} position={'relative'}>
+              <img
+                className="video-pic"
+                src={callDoctorImage}
+              />
 
-          <img
-            className="video-pic"
-            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREh8TIFWYXVR4v4TeSVn20PTQ5WNaF5IteeQ&s'}
-          />
+              <img
+                className="video-pic"
+                src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREh8TIFWYXVR4v4TeSVn20PTQ5WNaF5IteeQ&s'}
+              />
 
-          <Flex align={'center'} style={{ gap: 5 }} className="video-call-buttons">
-            <Button
-              size={"large"}
-              type={ isMicOn ? 'primary' : 'default'}
-              onClick={() => setIsMicOn(maybe => !maybe)}
-            >
-              {
-                isMicOn
-                  ? <FaMicrophone />
-                  : <IoMicOff />
-              }
-            </Button>
-            <Button
-              size={"large"}
-              type={ isCamOn ? 'primary' : 'default'}
-              onClick={() => setIsCamOn(maybe => !maybe)}
-            >
-              {
-                isCamOn
-                  ? <BsCameraVideoFill />
-                  : <BsCameraVideoOff />
-              }
-            </Button>
+              <Flex align={'center'} style={{ gap: 5 }} className="video-call-buttons">
+                <Button
+                  size={"large"}
+                  type={ isMicOn ? 'primary' : 'default'}
+                  onClick={() => setIsMicOn(maybe => !maybe)}
+                >
+                  {
+                    isMicOn
+                      ? <FaMicrophone />
+                      : <IoMicOff />
+                  }
+                </Button>
+                <Button
+                  size={"large"}
+                  type={ isCamOn ? 'primary' : 'default'}
+                  onClick={() => setIsCamOn(maybe => !maybe)}
+                >
+                  {
+                    isCamOn
+                      ? <BsCameraVideoFill />
+                      : <BsCameraVideoOff />
+                  }
+                </Button>
 
-            <Popconfirm
-              title="Leave Call"
-              description="Are you sure you want to leave the call? Your appointment will be marked as completed."
-              onConfirm={handleEndCall}
-              okText="End call"
-              cancelText="Stay in call"
-            >
-              <Button size={"large"} type='primary' danger>
-                <FaPhone />
-              </Button>
-            </Popconfirm>
+                <Popconfirm
+                  title="Leave Call"
+                  description="Are you sure you want to leave the call? Your appointment will be marked as completed."
+                  onConfirm={handleEndCall}
+                  okText="End call"
+                  cancelText="Stay in call"
+                >
+                  <Button size={"large"} type='primary' danger>
+                    <FaPhone />
+                  </Button>
+                </Popconfirm>
 
-          </Flex>
-        </Flex>
+              </Flex>
+            </Flex>
+        }
+
+        {
+          isCheckInQR &&
+            <Flex justify='center' align='center' direction='column'>
+              <img
+                src={'kirby-qr.png'}
+                style={{
+                  width: '100%'
+                }}
+              />
+              <Text as="p" m="0" style={{ fontSize: '24px' }}>Scan the QR to check in!</Text>
+            </Flex>
+        }
       </Modal>
     </Box>
   )
