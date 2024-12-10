@@ -61,7 +61,7 @@ export const selectedDoctorState = atom<IDoctor>({
 })
 
 export const appointmentInfoState = atom<IAppointment>({
-  key: 'selectedDoctorState',
+  key: 'appointmentInfoState',
   default: {
     time: null,
     date: undefined,

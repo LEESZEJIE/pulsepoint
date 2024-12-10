@@ -10,11 +10,11 @@ const UpcomingAppointments = ({ list, cancelAppointment }: { list: IScheduledApp
         list
         .filter(appt => {
           const now = dayjs();
-          const result = now.diff(appt.date, 'days');
+          const result = now.diff(appt.date, 'minutes');
           return result < -15 && !appt.isCompleted;
         })
         .map((appt, i) => {
-          return <AppointmentCard info={appt} onCancelAppointment={() => cancelAppointment(i)} isUpcoming={true} />
+          return <AppointmentCard key={i} info={appt} onCancelAppointment={() => cancelAppointment(i)} isUpcoming={true} />
         })
       }
     </Flex>

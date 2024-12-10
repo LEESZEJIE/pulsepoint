@@ -19,7 +19,11 @@ const OnGoingAppointments = ({
         .filter(appt => {
           const now = dayjs();
           const result = now.diff(appt.date, 'minutes');
-          return result >= -15 && result <= 15;
+
+          console.log('ongoing appointments');
+          console.log(result);
+
+          return result >= -15 && result <= 15 && !appt.isCompleted;
         })
         .map((appt, i) => {
           return <AppointmentCard key={i} info={appt} startCall={startCall} checkInWithQR={checkInQR} />

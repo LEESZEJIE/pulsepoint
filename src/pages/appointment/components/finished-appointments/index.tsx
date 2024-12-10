@@ -10,11 +10,11 @@ const FinishedAppointments = ({ list }: { list: IScheduledAppointment[] }) => {
         list
         .filter(appt => {
           const now = dayjs();
-          const result = now.diff(appt.date, 'days');
+          const result = now.diff(appt.date, 'minutes');
           return result > 15 || appt.isCompleted;
         })
-        .map(appt => {
-          return <AppointmentCard isFinished info={appt} />
+        .map((appt, i) => {
+          return <AppointmentCard key={i} isFinished info={appt} />
         })
       }
     </Flex>

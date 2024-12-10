@@ -40,14 +40,12 @@ const AppointmentCard = ({
         return prev;
       }
 
-      const now = dayjs();
-      const newList = [...prev];
       const newAppt: typeof prev[number] = {
-        ...newList[apptIndex],
-        date: now,
-        time: now,
+        ...prev[apptIndex],
+        date: dayjs(),
+        time: dayjs(),
       };
-      return [...newList.slice(0, apptIndex), newAppt, ...newList.slice(apptIndex + 1)];
+      return [...prev.slice(0, apptIndex), newAppt, ...prev.slice(apptIndex + 1)];
     })
   }
 
@@ -101,7 +99,7 @@ const AppointmentCard = ({
       </Flex>
 
       {
-        !isFinished &&
+        !isFinished && !(startCall || checkInWithQR) &&
           <Popconfirm
             title="Cancel Appointment"
             description="Are you sure to cancel this appointment?"

@@ -24,6 +24,8 @@ const AppointmentsPage = () => {
 
   const [isCheckInQR, setIsCheckInQR] = useState(false);
 
+  console.log(appointmentsList);
+
   function resetEverything() {
     setIsModalOpen(false);
     setIsMicOn(false);
@@ -58,8 +60,10 @@ const AppointmentsPage = () => {
         return newList;
       }
 
-      const appt = { ...newList[apptIndex] };
-      appt.isCompleted = true;
+      const appt: typeof prev[number] = {
+        ...newList[apptIndex],
+        isCompleted: true
+      };
       return [...newList.slice(0, apptIndex), appt, ...newList.slice(apptIndex + 1)];
     })
   }
