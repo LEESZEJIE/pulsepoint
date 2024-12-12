@@ -13,7 +13,7 @@ import OnGoingAppointments from "./components/ongoing-appointments";
 import ChatBox from "./components/chatbox";
 
 const AppointmentsPage = () => {
-  const [messages, setMessages] = useRecoilState(messagesListState);
+  const [, setMessages] = useRecoilState(messagesListState);
   const [messageApi, contextHolder] = message.useMessage();
   const [loggedInUser] = useRecoilState(loggedInUserState);
   const [appointmentsList, setAppointmentsList] = useRecoilState(appointmentsListState);

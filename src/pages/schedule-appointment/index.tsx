@@ -50,7 +50,7 @@ const ScheduleAppointmentPage = () => {
             <TimePicker
               hideDisabledOptions
               showSecond={false}
-              // minuteStep={30}
+              minuteStep={30}
               value={appointmentInfo.time}
               disabledTime={() => ({
                 disabledHours: () => [0,1,2,3,4,5,6,7,8,9,18,19,20,21,22,23]
