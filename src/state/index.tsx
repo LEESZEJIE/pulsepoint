@@ -26,6 +26,12 @@ export type IUser = {
 
 export type IScheduledAppointment = IDoctor & IAppointment & { id: number };
 
+export type IMessage = {
+  content: string;
+  isSelfSent: boolean;
+  type: 'text' | 'file';
+};
+
 export const isSidebarOpenState = atom({
   key: 'isSidebarOpenState',
   default: false,
@@ -78,4 +84,20 @@ export const appointmentsListState = atom<IScheduledAppointment[]>({
 export const isRescheduleState = atom({
   key: 'isRescheduleState',
   default: false
+});
+
+export const messagesListState = atom<IMessage[]>({
+  key: 'messagesListState',
+  default: [
+    {
+      isSelfSent: false,
+      type: 'text',
+      content: 'this is sent by the doctor',
+    },
+    {
+      isSelfSent: true,
+      type: 'text',
+      content: 'this is sent by me',
+    },
+  ]
 });

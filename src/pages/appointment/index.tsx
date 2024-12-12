@@ -4,14 +4,16 @@ import './index.css';
 import UpcomingAppointments from "./components/upcoming-appointments";
 import FinishedAppointments from "./components/finished-appointments";
 import { useRecoilState } from "recoil";
-import { appointmentsListState, loggedInUserState } from "../../state";
+import { appointmentsListState, loggedInUserState, messagesListState } from "../../state";
 import { useEffect, useState } from "react";
-import { FaMicrophone, FaPhone } from "react-icons/fa6";
+import { FaMessage, FaMicrophone, FaPhone } from "react-icons/fa6";
 import { IoMicOff } from "react-icons/io5";
 import { BsCameraVideoFill, BsCameraVideoOff } from "react-icons/bs";
 import OnGoingAppointments from "./components/ongoing-appointments";
+import ChatBox from "./components/chatbox";
 
 const AppointmentsPage = () => {
+  const [messages, setMessages] = useRecoilState(messagesListState);
   const [messageApi, contextHolder] = message.useMessage();
   const [loggedInUser] = useRecoilState(loggedInUserState);
   const [appointmentsList, setAppointmentsList] = useRecoilState(appointmentsListState);
@@ -24,7 +26,7 @@ const AppointmentsPage = () => {
 
   const [isCheckInQR, setIsCheckInQR] = useState(false);
 
-  console.log(appointmentsList);
+  const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
 
   function resetEverything() {
     setIsModalOpen(false);
@@ -33,6 +35,7 @@ const AppointmentsPage = () => {
     setCallDoctorImage('');
     setAppointmentId(0);
     setIsCheckInQR(false);
+    setIsChatBoxOpen(false);
   }
 
   function cancelAppointment(index: number): void {
@@ -42,6 +45,13 @@ const AppointmentsPage = () => {
   }
 
   function handleStartCall(id: number, doctorImage: string) {
+    setMessages([
+      {
+        isSelfSent: false,
+        type: 'text',
+        content: `Hello ${loggedInUser?.fullname}`
+      }
+    ]);
     setIsModalOpen(true);
     setCallDoctorImage(doctorImage);
     setIsMicOn(false);
@@ -50,6 +60,7 @@ const AppointmentsPage = () => {
   }
 
   function handleEndCall() {
+    setIsChatBoxOpen(false);
     setIsModalOpen(false);
     setCallDoctorImage('');
     setAppointmentsList(prev => {
@@ -133,6 +144,23 @@ const AppointmentsPage = () => {
       />
 
       <Modal
+        open={isChatBoxOpen}
+        centered
+        closable
+        onCancel={() => setIsChatBoxOpen(false)}
+        cancelButtonProps={{
+          style: { display: 'none' }
+        }}
+        okButtonProps={{
+          style: { display: 'none' }
+        }}
+        height={'600px'}
+        width={'550px'}
+      >
+        <ChatBox />
+      </Modal>
+
+      <Modal
         open={isModalOpen}
         centered
         closable={isCheckInQR}
@@ -155,6 +183,13 @@ const AppointmentsPage = () => {
               />
 
               <Flex align={'center'} style={{ gap: 5 }} className="video-call-buttons">
+                <Button
+                  size={"large"}
+                  type='primary'
+                  onClick={() => setIsChatBoxOpen(true)}
+                >
+                  <FaMessage />
+                </Button>
                 <Button
                   size={"large"}
                   type={ isMicOn ? 'primary' : 'default'}
