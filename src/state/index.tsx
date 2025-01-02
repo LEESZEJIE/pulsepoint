@@ -41,8 +41,8 @@ export const usersListState = atom<IUser[]>({
   key: 'usersListState',
   default: [
     {
-      fullname: 'test123',
-      password: '48355',
+      fullname: 'Jim',
+      password: '123',
       nric: '011111-10-1111',
       contact: '012-345 6789',
       address: 'TQG 2028 Go Diamond City'

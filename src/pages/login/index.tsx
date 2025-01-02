@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil";
 import { loggedInUserState, usersListState } from "../../state";
@@ -10,8 +10,8 @@ const LoginPage = () => {
 
   const [usersList] = useRecoilState(usersListState);
   const [, setLoggedInUser] = useRecoilState(loggedInUserState);
-  const [usernameText, setUsernameText] = useState('');
-  const [passwordText, setPasswordText] = useState('');
+  const [usernameText, setUsernameText] = useState('Jim');
+  const [passwordText, setPasswordText] = useState('123');
 
   function handleLogin() {
     if ([usernameText, passwordText].includes('')) {
@@ -33,6 +33,10 @@ const LoginPage = () => {
     setLoggedInUser(null);
     navigate('/home');
   }
+
+  useEffect(() => {
+    handleLogin();
+  }, []);
 
   return (
     <Box id='login-page' className="page">

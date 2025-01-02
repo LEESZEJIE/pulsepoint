@@ -8,7 +8,7 @@ let counter = 0;
 const ConfirmAppointmentPage = () => {
   const navigate = useNavigate();
   const [doctor] = useRecoilState(selectedDoctorState);
-  const [appointment] = useRecoilState(appointmentInfoState);
+  const [appointment, setAppointment] = useRecoilState(appointmentInfoState);
   const [, setAppointmentsList] = useRecoilState(appointmentsListState);
   const [isReschedule, setIsReschedule] = useRecoilState(isRescheduleState);
   // const [idCounter, setIdCounter] = useState(1);
@@ -38,6 +38,12 @@ const ConfirmAppointmentPage = () => {
       return [...prev.slice(0, foundAppointmentIndex), modifiedAppt, ...prev.slice(foundAppointmentIndex + 1)];
     })
     setIsReschedule(false);
+    setAppointment({
+      time: null,
+      date: undefined,
+      type: 'teleconsultation',
+      isCompleted: false,
+    });
     // setIdCounter(prev => prev + 1);
     navigate('/appointment')
   }

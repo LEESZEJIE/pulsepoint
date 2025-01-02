@@ -1,6 +1,6 @@
 import { Box, Flex, SegmentedControl, Text, Button } from "@radix-ui/themes"
 import { useRecoilState } from "recoil"
-import { appointmentInfoState, selectedDoctorState } from "../../state"
+import { appointmentInfoState, appointmentsListState, selectedDoctorState } from "../../state"
 import DoctorCard from "../../components/doctor-card";
 import { useNavigate } from "react-router-dom";
 import { Calendar, TimePicker } from "antd";
@@ -10,6 +10,7 @@ const ScheduleAppointmentPage = () => {
   const navigate = useNavigate();
   const [selectedDoctor] = useRecoilState(selectedDoctorState);
   const [appointmentInfo, setAppointmentInfo] = useRecoilState(appointmentInfoState);
+  const [appointmentsList] = useRecoilState(appointmentsListState);
 
   if (selectedDoctor.name === '') {
     navigate('/home');
@@ -53,7 +54,15 @@ const ScheduleAppointmentPage = () => {
               minuteStep={30}
               value={appointmentInfo.time}
               disabledTime={() => ({
-                disabledHours: () => [0,1,2,3,4,5,6,7,8,9,18,19,20,21,22,23]
+                disabledHours: () => [0,1,2,3,4,5,6,7,8,9,18,19,20,21,22,23],
+                disabledMinutes: (hour: number) => {
+                  const finalList =  appointmentsList
+                    .filter(item => item.name === selectedDoctor?.name)
+                    .filter(appt => Number(appt.time?.format('HH')) === hour)
+                    .map(appt => Number(appt.time?.format('mm')))
+
+                  return finalList;
+                }
               })}
               onChange={time => setAppointmentInfo(prev => ({ ...prev, time }))}
             />
