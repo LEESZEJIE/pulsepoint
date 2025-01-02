@@ -139,7 +139,7 @@ const AppointmentsPage = () => {
           position: 'absolute',
           bottom: 0,
           left: 0,
-          width: 900
+          width: 950
         }}
       />
 

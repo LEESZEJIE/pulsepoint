@@ -54,7 +54,7 @@ const RegisterPage = () => {
       const keys = Object.keys(user);
 
       keys.forEach(key => {
-        if (user[key] === registerInfo[key]) {
+        if (user[key as keyof typeof user] === registerInfo[key as keyof typeof registerInfo]) {
           isExists = true;
         }
       })
