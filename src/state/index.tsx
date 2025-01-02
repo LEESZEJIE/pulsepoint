@@ -1,4 +1,4 @@
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { atom } from "recoil";
 
 export interface IDoctor {
@@ -70,7 +70,7 @@ export const appointmentInfoState = atom<IAppointment>({
   key: 'appointmentInfoState',
   default: {
     time: null,
-    date: undefined,
+    date: dayjs(),
     type: 'teleconsultation',
     isCompleted: false
   }

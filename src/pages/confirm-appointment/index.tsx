@@ -2,6 +2,7 @@ import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes"
 import { useRecoilState } from "recoil"
 import { appointmentInfoState, appointmentsListState, isRescheduleState, selectedDoctorState } from "../../state";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 let counter = 0;
 
@@ -40,7 +41,7 @@ const ConfirmAppointmentPage = () => {
     setIsReschedule(false);
     setAppointment({
       time: null,
-      date: undefined,
+      date: dayjs(),
       type: 'teleconsultation',
       isCompleted: false,
     });
